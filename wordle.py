@@ -71,15 +71,12 @@ class Wordle:
         """
         Returns the best guess given the current wordset
         """
-        d = {}
-        for g in self.guesses:
-            d[g] = self._maxRemaining(g)
-        best = min(d.values())
-        bestGuesses = [g for g in d if d[g] == best]
+        d = {g: self._maxRemaining(g) for g in self.guesses}
+        bestGuesses = [g for g in d if d[g] == min(d.values())]
         for g in bestGuesses:
             if g in self.words:
                 return g
-        return min(d, key=d.get)
+        return bestGuesses[0]
     
     def _getGuessFromUser(self, guess):
         print(f'Suggested guess: {guess}')
@@ -118,6 +115,8 @@ class Wordle:
             guess = self._getGuessFromUser(guess)
             result = self._getResultFromUser()
             self.words = [w for w in self.words if self._fitsGuess(w, guess, result)]
+            if len(self.words) == 0:
+                break
             if self.hard:
                 for i, (c, r) in enumerate(zip(guess, result)):
                     if r == '2':
