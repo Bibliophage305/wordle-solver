@@ -97,7 +97,6 @@ class Wordle:
             if guess in self.guesses:
                 break
             print('Guess is not in Wordle\'s list of valid guesses')
-        self.guesses.remove(guess)
         return guess
     
     def _getResultFromUser(self):
