@@ -12,7 +12,7 @@ class Wordle:
         self.hard = hard
         if recalculateFirstGuess:
             print('Recalculating first guess...')
-            self.firstGuess = self._bestGuess(self.guesses, self.words)
+            self.firstGuess = self._bestGuess()
             print(f'First guess recalculated: {self.firstGuess}')
         else:
             self.firstGuess = 'aesir'
@@ -128,7 +128,7 @@ class Wordle:
             print('Something went wrong, all words have been eliminated')
 
 def main():
-    w = Wordle(hard=True)
+    w = Wordle()
     w.play()
 
 if __name__ == '__main__':
