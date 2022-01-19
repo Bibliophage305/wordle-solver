@@ -1,5 +1,5 @@
 class Wordle:
-    def __init__(self, hard=True, recalculateFirstGuess=False):
+    def __init__(self, hard=False, recalculateFirstGuess=False):
         """
         Initialises a new Wordle game
         
@@ -93,7 +93,17 @@ class Wordle:
             guess = input('Enter your guess: ')
             if guess in self.guesses:
                 break
-            print('Guess is not in Wordle\'s list of valid guesses')
+            while True:
+                token = input('Guess is not in Wordle\'s list of valid guesses; continue? (y/N) ')
+                if token in 'nN' or token == '':
+                    cont = False
+                    break
+                if token in 'yY':
+                    cont = True
+                    break
+                print('Invalid input, must be y or n')
+            if cont:
+                break
         return guess
     
     def _getResultFromUser(self):
@@ -106,14 +116,20 @@ class Wordle:
         return result
     
     def play(self):
+        guessCount = 0
         guess = self.firstGuess
-        while len(self.words) > 1:
+        while self.words:
+            guessCount += 1
+            print('-'*80)
+            print(f'Guess {guessCount}')
             if len(self.words) < 11:
                 print(f'{len(self.words)} words remaining: {", ".join(self.words)}')
             else:
                 print(f'{len(self.words)} words remaining')
             guess = self._getGuessFromUser(guess)
             result = self._getResultFromUser()
+            if result == '2'*len(guess):
+                break
             self.words = [w for w in self.words if self._fitsGuess(w, guess, result)]
             if len(self.words) == 0:
                 break
@@ -122,10 +138,11 @@ class Wordle:
                     if r == '2':
                         self.guesses = [g for g in self.guesses if g[i] == c]
             guess = self._bestGuess()
-        if len(self.words) == 1:
-            print(f'Word: {self.words[0]}')
-        else:
+        if not self.words:
             print('Something went wrong, all words have been eliminated')
+        else:
+            print('-'*80)
+            print(f'You win! The word was {guess}, and you guessed it in {guessCount} guesses')
 
 def main():
     w = Wordle()
