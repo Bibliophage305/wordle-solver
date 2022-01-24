@@ -1,21 +1,28 @@
 class Wordle:
-    def __init__(self, hard=False, recalculateFirstGuess=False):
+    firstGuesses = {
+        'wordle': 'aesir',
+        'lewdle': 'cunts',
+    }
+
+    def __init__(self, hard=False, recalculateFirstGuess=False, game='wordle'):
         """
         Initialises a new Wordle game
         
         Keyword arguments:
             recalculateFirstGuess (bool): If True, recalculates the first guess
             hard (bool): If True, uses hard mode
+            game (str): The name of the game to play
         """
-        self.words = self._readFile('words.txt')
-        self.guesses = self._readFile('guesses.txt') + self.words
+        self.game = game
+        self.words = self._readFile(f'resources/{game}/words.txt')
+        self.guesses = self._readFile(f'resources/{game}/guesses.txt') + self.words
         self.hard = hard
-        if recalculateFirstGuess:
+        if recalculateFirstGuess or game not in self.firstGuesses:
             print('Recalculating first guess...')
             self.firstGuess = self._bestGuess()
             print(f'First guess recalculated: {self.firstGuess}')
         else:
-            self.firstGuess = 'aesir'
+            self.firstGuess = self.firstGuesses[game]
     
     def _readFile(self, filename):
         with open(filename) as f:
@@ -145,7 +152,7 @@ class Wordle:
             print(f'You win! The word was {guess}, and you guessed it in {guessCount} guesses')
 
 def main():
-    w = Wordle()
+    w = Wordle(game='wordle')
     w.play()
 
 if __name__ == '__main__':
