@@ -2,6 +2,24 @@ class Wordle:
     firstGuesses = {
         'wordle': 'aesir',
         'lewdle': 'cunts',
+        'byrdle': 'siren',
+        'prayerdle': 'rates',
+        'nerdle': '4*38=152',
+        'mini-nerdle': '2*7=14',
+        'taylordle': 'nares',
+        'a-greener-wordle': 'srale',
+        'hello-wordl-4': 'olea',
+        'hello-wordl-5': 'raise',
+        'hello-wordl-6': 'tailer',
+        'hello-wordl-7': 'tenails',
+        'hello-wordl-8': 'centrals',
+        'hello-wordl-9': 'secretion',
+        'hello-wordl-10': 'centralism',
+        'hello-wordl-11': 'petrolatums',
+        'hello-wordl-12': 'parochialism',
+        'hello-wordl-13': 'deterministic',
+        'hello-wordl-14': 'congratulation',
+        'hello-wordl-15': 'inconsiderately',
     }
 
     def __init__(self, hard=False, recalculateFirstGuess=False, game='wordle'):
@@ -13,9 +31,11 @@ class Wordle:
             hard (bool): If True, uses hard mode
             game (str): The name of the game to play
         """
+        if game not in self.firstGuesses:
+            raise NotImplementedError(f'{game} has not been implemented yet')
         self.game = game
         self.words = self._readFile(f'resources/{game}/words.txt')
-        self.guesses = self._readFile(f'resources/{game}/guesses.txt') + self.words
+        self.guesses = self._readFile(f'resources/{game}/guesses.txt') | self.words
         self.hard = hard
         if recalculateFirstGuess or game not in self.firstGuesses:
             print('Recalculating first guess...')
@@ -27,7 +47,7 @@ class Wordle:
     def _readFile(self, filename):
         with open(filename) as f:
             words = f.read().splitlines()
-        return words
+        return set(words)
 
     def _fitsGuess(self, word, guess, result):
         return self._findGuess(word, guess) == result
@@ -61,7 +81,7 @@ class Wordle:
                     result[i] = '0'
         return ''.join(result)
 
-    def _maxRemaining(self, guess):
+    def _maxRemaining(self, guess, bestSoFar):
         """
         Returns the maximum number of remaining words for a given guess
         findGuess has 3^5 = 243 possible results, so find the one of these results that occurs most often with the given wordset
@@ -72,14 +92,22 @@ class Wordle:
             if r not in d:
                 d[r] = 0
             d[r] += 1
+            if d[r] > bestSoFar:
+                return d[r]
         return max(d.values())
 
     def _bestGuess(self):
         """
         Returns the best guess given the current wordset
         """
-        d = {g: self._maxRemaining(g) for g in self.guesses}
-        bestGuesses = [g for g in d if d[g] == min(d.values())]
+        bestGuesses, bestSoFar = [], len(self.words)+1
+        for g in self.guesses:
+            r = self._maxRemaining(g, bestSoFar)
+            if r < bestSoFar:
+                bestGuesses, bestSoFar = [g], r
+            elif r == bestSoFar:
+                bestGuesses.append(g)
+
         for g in bestGuesses:
             if g in self.words:
                 return g
@@ -141,9 +169,7 @@ class Wordle:
             if len(self.words) == 0:
                 break
             if self.hard:
-                for i, (c, r) in enumerate(zip(guess, result)):
-                    if r == '2':
-                        self.guesses = [g for g in self.guesses if g[i] == c]
+                self.guesses = [w for w in self.guesses if self._fitsGuess(w, guess, result)]
             guess = self._bestGuess()
         if not self.words:
             print('Something went wrong, all words have been eliminated')
@@ -152,7 +178,7 @@ class Wordle:
             print(f'You win! The word was {guess}, and you guessed it in {guessCount} guesses')
 
 def main():
-    w = Wordle(game='wordle')
+    w = Wordle()
     w.play()
 
 if __name__ == '__main__':
