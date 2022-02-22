@@ -2,14 +2,20 @@
 
 Uses a simple minimax algorithm to solve Wordle and similar games.
 
-Run ```wordle.py``` to start the solver
+Run ```solver.py``` to start the solver
 
 ### Supported games
-- [Wordle](https://www.powerlanguage.co.uk/wordle/)
+- [Wordle](https://www.nytimes.com/games/wordle/index.html)
 - [Nerdle](https://nerdlegame.com/) (including the mini version)
 - [Hello Wordl](https://hellowordl.net/) (all length variants 4-15)
 - [Lewdle](https://www.lewdlegame.com/)
-- [A Greener Wordle](https://agreenerworldle.org/)
-- [Byrdle](https://rbrignall.github.io/byrdle/)
+- [A Greener Worldle](https://agreenerworldle.org/)
+- [Byrdle](https://www.byrdle.net/)
 - [Prayerdle](https://graceupongrace.org.uk/prayerdle/)
 - [Taylordle](https://www.taylordle.com/)
+- [Wordle Off](http://wordle.jonyork.net/)
+- [Evil Wordle](https://swag.github.io/evil-wordle/) (both 5 and 6)
+- [Primel](https://converged.yt/primel/)
+- [Brdl](https://brdl.alex.gd/)
+- [Airportle](https://airportle.scottscheapflights.com/)
+- [Passwordle](https://passwordle.com/)
