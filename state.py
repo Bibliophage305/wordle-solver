@@ -175,13 +175,3 @@ class State:
         Returns a string of the guesses remaining
         """
         return f'{len(self.guesses)} guess{"es" if len(self.guesses) > 1 else ""} remaining{(": " + ", ".join(self.guesses)) if len(self.guesses) < 11 else ""}'
-
-if __name__ == '__main__':
-    with open('resources/mini-nerdle/words.txt') as f:
-        words = set(f.read().split())
-    with open('resources/mini-nerdle/guesses.txt') as f:
-        guesses = set(f.read().split()) | words
-    state = State(wordLength=6, words=words, guesses=guesses, hard=True, verbose=True)
-    state.bestGuess()
-    state.update('2*7=14', '121222')
-    state.bestGuess()

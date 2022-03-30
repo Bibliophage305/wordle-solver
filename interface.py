@@ -99,7 +99,3 @@ class Interface:
             print(f'\nGuess {guessCount}')
             self._update(result)
         print(f'\nYou win! The word was {self.guess}, and you guessed it in {guessCount} guesses')
-
-if __name__ == "__main__":
-    interface = Interface(game='hello-wordl-7', hard=True)
-    interface.play()
