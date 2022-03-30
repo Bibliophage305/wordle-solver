@@ -9,7 +9,6 @@ Run ```solver.py``` to start the solver
 - [Nerdle](https://nerdlegame.com/) (including the mini version)
 - [Hello Wordl](https://hellowordl.net/) (all length variants 4-15)
 - [Lewdle](https://www.lewdlegame.com/)
-- [A Greener Worldle](https://agreenerworldle.org/)
 - [Byrdle](https://www.byrdle.net/)
 - [Prayerdle](https://graceupongrace.org.uk/prayerdle/)
 - [Taylordle](https://www.taylordle.com/)
