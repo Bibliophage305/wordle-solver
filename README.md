@@ -18,3 +18,4 @@ Run ```solver.py``` to start the solver
 - [Brdl](https://brdl.alex.gd/)
 - [Airportle](https://airportle.scottscheapflights.com/)
 - [Passwordle](https://passwordle.com/)
+- [Jewdle](https://www.jewdle.app/)
